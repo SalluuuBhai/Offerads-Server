@@ -21,7 +21,8 @@ const mongoose = require("mongoose");
 const { dbUrl } = require("../common/dbConfig");
 mongoose.connect(dbUrl);
 
-const API = "http://localhost:3000";
+// const API = "http://localhost:3000";
+const API = "https://offerads.netlify.app";
 
 /* GET users listing. */
 router.get("/", validateToken, async function (req, res) {
