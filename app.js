@@ -18,6 +18,7 @@ var dbUrl = require('./common/dbConfig');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var offersRouter = require('./routes/offers');
+var customerRouter = require('./routes/customer');
 
 const { UserModel } = require('./schemas/userSchema');
 // const { OffersPostModel } = require('./schemas/offersPostSchema');
@@ -42,6 +43,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/offers', offersRouter);
+app.use('/customer', customerRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
