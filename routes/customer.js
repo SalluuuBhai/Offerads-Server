@@ -42,6 +42,9 @@ router.post("/customerdetails", async (req, res) => {
 });
 
   
-
+router.get('/getIpAddress', async (req, res) => {
+  const ip = req.ip || req.connection.remoteAddress;
+  res.status(201).json({ ip });
+});
 
 module.exports = router;
