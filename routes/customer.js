@@ -11,41 +11,36 @@ const API = 'http://localhost:3000'
 
 
 router.post("/customerdetails", async (req, res) => {
-    try {
-    //   console.log("Received request to create a new customer:", req.body);
-  
-      const { userName, mobileNumber, userID } = req.body;
-  
-      // Check if the mobile number already exists
-      const existingCustomer = await CustomerModel.findOne({ mobileNumber });
-      if (existingCustomer) {
-        return res.status(400).json({
-          message: "Mobile number already in use. Please choose a different one.",
-        });
-      }
-  
-      // Create a new customer
-      const newCustomer = await CustomerModel.create({
-        userName,
-        mobileNumber,
-        userID,
-      });
-  
-    //   console.log("Customer created successfully:", newCustomer);
-  
-      res.status(201).json({
-        message: "Subscribed successfully.",
-        customer: newCustomer,
-      });
-    } catch (error) {
-    //   console.error("Error creating customer:", error);
-  
-      res.status(500).json({
-        message: "Internal Server Error",
-        error: error.message,
+  try {
+    const { userName, mobileNumber, shopName, userID } = req.body;
+
+    const existingCustomer = await CustomerModel.findOne({ mobileNumber, userID });
+    if (existingCustomer) {
+      return res.status(400).json({
+        message: "This Mobile Number Already has been Subscribed! ",
       });
     }
-  });
+
+    // Create a new customer
+    const newCustomer = await CustomerModel.create({
+      userName,
+      mobileNumber,
+      shopName,
+      userID,
+    });
+
+    res.status(201).json({
+      message: "Subscribed successfully.",
+      customer: newCustomer,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+});
+
   
 
 

@@ -16,6 +16,10 @@ const CustomerSchema = new mongoose.Schema(
       
     },
 
+    shopName: {
+      type: String,
+    },
+
     userID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "userModel",
