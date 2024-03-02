@@ -69,6 +69,58 @@ router.post("/offerpost", async (req, res) => {
   }
 });
 
+router.get("/getoffer/:offerID", async (req, res) => {
+  try {
+      const { offerID } = req.params;
+      console.log(offerID);
+      const offer = await OffersPostModel.findOne({ offerID: offerID }); // Assuming your model is named OfferModel
+      console.log("offer:" , offer);
+      if (offer) {
+          res.status(200).send({
+              offer,
+              message: "Offer Data Successful",
+          });
+      } else {
+          res.status(404).send({
+              message: "Offer Data Not Found",
+          });
+      }
+  } catch (error) {
+      res.status(500).send({ message: "Internal Server Error !!!", error });
+  }
+});
+
+// Backend (Express) - Update offer post route
+router.put("/offer-post-update/:offerID", async (req, res) => {
+  try {
+    const offerID = req.params.offerID;
+    const offerData = req.body.offerPostData;
+    console.log("Check" , offerID, offerData);
+    const existingOffer = await OffersPostModel.findOne({ offerID: offerID });
+    console.log("Check1", existingOffer);
+
+    if (existingOffer) {
+      existingOffer.offerTitle = offerData.offerTitle || existingOffer.offerTitle;
+      existingOffer.offerContent = offerData.offerContent || existingOffer.offerContent;
+      existingOffer.offerValidity = offerData.offerValidity || existingOffer.offerValidity;
+      existingOffer.image = offerData.image || existingOffer.image;
+
+      const updatedOffer = await existingOffer.save();
+      console.log("updatedOffer", updatedOffer);
+      res.status(200).send({
+        message: "Offer post updated successfully.",
+        offer: updatedOffer,
+      });
+    } else {
+      res.status(404).send({ message: "Offer not found." });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({ message: "Internal Server Error", error: error.message });
+  }
+});
+
+
 // Delete an offer post by ID
 router.delete("/deleteoffer/:offerId", async (req, res) => {
   try {
