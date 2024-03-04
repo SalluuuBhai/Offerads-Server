@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 const { UserModel } = require("./userSchema");
+const { type } = require("os");
 
 const CustomerSchema = new mongoose.Schema(
   {
@@ -14,6 +16,17 @@ const CustomerSchema = new mongoose.Schema(
       required: true,
       trim: true,
       
+    },
+
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+      lowercase: true,
+      validate: {
+        validator: (value) => validator.isEmail(value),
+        message: 'Invalid email address',
+      },
     },
 
     shopName: {

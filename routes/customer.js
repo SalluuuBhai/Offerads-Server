@@ -12,12 +12,24 @@ const API = 'http://localhost:3000'
 
 router.post("/customerdetails", async (req, res) => {
   try {
-    const { userName, mobileNumber, shopName, userID } = req.body;
+    const { userName, mobileNumber, email, shopName, userID } = req.body;
 
-    const existingCustomer = await CustomerModel.findOne({ mobileNumber, userID });
-    if (existingCustomer) {
+    const existingEmailCustomer = await CustomerModel.findOne({ email, userID });
+
+    if (existingEmailCustomer) {
       return res.status(400).json({
-        message: "This Mobile Number Already has been Subscribed! ",
+        message: "This Email Already has been Subscribed!",
+        customer: existingEmailCustomer,
+      });
+    }
+
+    // If email is unique, check mobile number
+    const existingMobileCustomer = await CustomerModel.findOne({ mobileNumber, userID });
+
+    if (existingMobileCustomer) {
+      return res.status(400).json({
+        message: "This Mobile Number Already has been Subscribed!",
+        customer: existingMobileCustomer,
       });
     }
 
@@ -25,6 +37,7 @@ router.post("/customerdetails", async (req, res) => {
     const newCustomer = await CustomerModel.create({
       userName,
       mobileNumber,
+      email,
       shopName,
       userID,
     });
@@ -40,6 +53,8 @@ router.post("/customerdetails", async (req, res) => {
     });
   }
 });
+
+
 
   
 router.get('/getIpAddress', async (req, res) => {
