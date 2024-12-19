@@ -58,9 +58,18 @@ router.post("/offerpost", async (req, res) => {
 
     console.log("Offer created successfully:", newOffer);
 
-    // Send offer to subscribed customers via email
-    const subscribedCustomers = await getSubscribedCustomers(); // Implement a function to get subscribed customers
-    await sendOfferEmail(subscribedCustomers, newOffer);
+    // // Send offer to subscribed customers via email
+    // const subscribedCustomers = await getSubscribedCustomers();
+    // if (subscribedCustomers.length > 0) {
+    //   const offerURL = `https://offerads.netlify.app/offerview/${newOffer._id}`; // Replace with your offer URL structure
+    //   const offerText = "View Offer";
+    //   await SendOfferEmail(
+    //     subscribedCustomers.map((customer) => customer.email),
+    //     offerURL,
+    //     offerText,
+    //     newOffer.offerTitle
+    //   );
+    // }
 
     res.status(201).json({
       message: "Offer created successfully.",
