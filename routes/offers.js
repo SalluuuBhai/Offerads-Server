@@ -103,7 +103,7 @@ router.put("/offer-post-update/:offerID", async (req, res) => {
     const offerID = req.params.offerID;
     const offerData = req.body.offerPostData;
     console.log("Check" , offerID, offerData);
-    const existingOffer = await OffersPostModel.findById({ _id: offerID });
+    const existingOffer = await OffersPostModel.findOne({ offerID: offerID });
     console.log("Check1", existingOffer);
 
     if (existingOffer) {
@@ -134,7 +134,7 @@ router.put("/offer-post-update-expo/:offerID", async (req, res) => {
     const offerID = req.params.offerID;
     const offerData = req.body.offerPostData;
     console.log("Check" , offerID, offerData);
-    const existingOffer = await OffersPostModel.findOne({ offerID: offerID });
+    const existingOffer = await OffersPostModel.findById({ _id: offerID });
     console.log("Check1", existingOffer);
 
     if (existingOffer) {
