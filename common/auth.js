@@ -16,7 +16,7 @@ const hashCompare = async (password, hashedPassword) => {
 
 const createToken = async (payload) => {
   let token = await jwt.sign(payload, secretKey, 
-    { expiresIn: "15d" }
+    { expiresIn: "24h" }
   );
   return token;
 };
