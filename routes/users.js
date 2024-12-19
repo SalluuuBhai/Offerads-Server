@@ -295,6 +295,8 @@ router.post("/resend-verification-email", async (req, res) => {
 //     res.status(500).send({ message: "Internal Server Error", error });
 //   }
 // });
+
+//afer verifying email
 router.post("/send-verification-email", async (req, res) => {
   try {
     if (req.headers.authorization) {
